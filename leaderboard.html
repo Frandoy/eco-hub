@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Leaderboard — ECO-HUB 2026</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.page-hero{background:linear-gradient(135deg,#0a1a0d,#1a4d2e,#2d6a4f);padding:100px 5% 90px;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(212,160,23,.1),transparent 70%);border-radius:50%}
+.page-hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--cream);clip-path:ellipse(55% 100% at 50% 100%)}
+.page-hero h1{color:var(--white);margin-bottom:.75rem}
+.page-hero p{color:rgba(255,255,255,.75);max-width:560px}
+.breadcrumb{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:1rem}
+.breadcrumb a{color:var(--gold-light)}
+
+/* ── Tabs ── */
+.lb-tabs{display:flex;gap:0;background:var(--white);border-radius:var(--r-full);padding:4px;box-shadow:var(--shadow-sm);width:fit-content;margin:0 auto 3rem}
+.lb-tab{padding:10px 24px;border-radius:var(--r-full);font-size:.84rem;font-weight:600;cursor:pointer;color:var(--text-mid);transition:all .3s;border:none;background:transparent;font-family:'Poppins',sans-serif}
+.lb-tab.active{background:linear-gradient(135deg,var(--green-sage),var(--green-mid));color:var(--white);box-shadow:0 4px 14px rgba(45,106,79,.3)}
+
+/* ── Top 3 Podium ── */
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:1rem;margin-bottom:3rem}
+.podium-item{text-align:center;flex:1;max-width:220px}
+.podium-rank{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:.5rem;display:block}
+.podium-card{border-radius:var(--r-md);padding:1.5rem 1rem;box-shadow:var(--shadow-md);position:relative;overflow:hidden;transition:all .35s}
+.podium-card:hover{transform:translateY(-6px)}
+.podium-card.first{background:linear-gradient(135deg,#f0c040,#d4a017);padding-top:2rem}
+.podium-card.second{background:linear-gradient(135deg,#c8d6e0,#a0b4c0)}
+.podium-card.third{background:linear-gradient(135deg,#c8a080,#a07050)}
+.podium-avatar{width:70px;height:70px;border-radius:50%;margin:0 auto .75rem;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid rgba(255,255,255,.5)}
+.podium-name{font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:.2rem}
+.podium-city{font-size:.72rem;color:rgba(255,255,255,.8);margin-bottom:.5rem}
+.podium-pts{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white)}
+.podium-lbl{font-size:.65rem;color:rgba(255,255,255,.75)}
+.podium-badge{position:absolute;top:.5rem;right:.75rem;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);background:rgba(255,255,255,.25);color:var(--white)}
+.podium-item.first .podium-rank{color:var(--gold)}
+.podium-item.second .podium-rank{color:#7a9eb0}
+.podium-item.third .podium-rank{color:#9a7050}
+
+/* ── Leaderboard Table ── */
+.lb-table{background:var(--white);border-radius:var(--r-md);box-shadow:var(--shadow-sm);overflow:hidden}
+.lb-header{display:grid;grid-template-columns:60px 1fr 120px 100px 100px;gap:0;padding:1rem 1.5rem;background:var(--cream-dark);font-size:.75rem;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:.08em}
+.lb-row{display:grid;grid-template-columns:60px 1fr 120px 100px 100px;gap:0;padding:1rem 1.5rem;border-bottom:1px solid var(--cream-dark);align-items:center;transition:all .25s;cursor:pointer}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:var(--cream)}
+.lb-row.highlight{background:linear-gradient(135deg,rgba(45,106,79,.06),rgba(212,160,23,.04))}
+.rank-num{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text-light)}
+.rank-num.gold{color:var(--gold)}
+.rank-num.silver{color:#7a9eb0}
+.rank-num.bronze{color:#9a7050}
+.lb-user{display:flex;align-items:center;gap:.75rem}
+.lb-avatar{width:42px;height:42px;border-radius:50%;background:var(--green-mist);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.lb-name{font-size:.88rem;font-weight:600;color:var(--green-deep)}
+.lb-sub{font-size:.72rem;color:var(--text-light)}
+.lb-badges{display:flex;gap:4px;flex-wrap:wrap}
+.lb-pts{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--green-deep)}
+.lb-change{font-size:.75rem;font-weight:600}
+.lb-change.up{color:#27ae60}
+.lb-change.down{color:#e74c3c}
+.lb-change.same{color:var(--text-light)}
+
+/* ── Guardian City Section ── */
+.guardian-section{background:linear-gradient(135deg,#0a1f14,#1a3d2b);padding:80px 5%}
+.gc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.gc-card{background:rgba(255,255,255,.07);border:1px solid rgba(183,228,199,.2);border-radius:var(--r-md);padding:1.75rem;transition:all .35s;position:relative;overflow:hidden}
+.gc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green-light),var(--gold))}
+.gc-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.gc-zone{font-size:.7rem;font-weight:700;color:var(--green-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
+.gc-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.25rem}
+.gc-city{font-size:.77rem;color:rgba(255,255,255,.6);margin-bottom:1rem}
+.gc-stats{display:flex;gap:1rem;flex-wrap:wrap}
+.gc-stat{text-align:center}
+.gc-stat-num{font-weight:700;color:var(--gold-light);font-size:.95rem;display:block}
+.gc-stat-lbl{font-size:.62rem;color:rgba(255,255,255,.5)}
+.gc-badge-wrap{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.75rem}
+.gc-badge{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);background:rgba(183,228,199,.15);color:var(--green-light)}
+
+/* ── Super Relawan Nomination ── */
+.nomination-section{padding:80px 5%;background:var(--cream-dark)}
+.nominee-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+.nominee-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .4s var(--ease)}
+.nominee-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.nominee-photo{height:180px;background:linear-gradient(135deg,var(--green-mist),var(--cream-dark));display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
+.nominee-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.nominee-crown{position:absolute;top:.75rem;right:.75rem;font-size:1.5rem}
+.nominee-body{padding:1.25rem}
+.nominee-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--green-deep);margin-bottom:.2rem;font-weight:700}
+.nominee-title{font-size:.75rem;color:var(--text-light);margin-bottom:.75rem}
+.nominee-stats{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem}
+.ns-item{background:var(--cream);border-radius:8px;padding:.5rem .75rem;text-align:center}
+.ns-num{font-weight:700;font-size:.95rem;color:var(--green-deep);display:block}
+.ns-lbl{font-size:.62rem;color:var(--text-light)}
+.vote-bar{background:var(--cream-dark);border-radius:var(--r-full);height:8px;margin-bottom:.5rem;overflow:hidden}
+.vote-fill{height:100%;border-radius:var(--r-full);background:linear-gradient(90deg,var(--green-sage),var(--gold));transition:width 1.5s var(--ease)}
+.vote-pct{font-size:.72rem;color:var(--text-mid);margin-bottom:.75rem}
+.vote-btn{width:100%;padding:10px;background:linear-gradient(135deg,var(--green-sage),var(--green-mid));color:var(--white);border:none;border-radius:var(--r-full);font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .3s}
+.vote-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,106,79,.35)}
+.vote-btn:disabled{background:var(--cream-dark);color:var(--text-light);cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── Eco Challenge ── */
+.challenge-section{padding:80px 5%}
+.challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.ch-card{background:var(--white);border-radius:var(--r-md);padding:1.75rem;box-shadow:var(--shadow-sm);border:2px solid transparent;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.ch-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(45,106,79,.04),rgba(212,160,23,.03));opacity:0;transition:opacity .4s}
+.ch-card:hover{border-color:var(--green-sage);transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.ch-card:hover::before{opacity:1}
+.ch-tag{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem;display:inline-block}
+.ch-tag.active{background:rgba(45,106,79,.12);color:var(--green-sage)}
+.ch-tag.upcoming{background:var(--gold-pale);color:#7a5f00}
+.ch-tag.done{background:var(--cream-dark);color:var(--text-light)}
+.ch-icon{font-size:2rem;margin-bottom:.75rem;display:block}
+.ch-card h3{font-size:1rem;color:var(--green-deep);margin-bottom:.5rem}
+.ch-card p{font-size:.82rem;color:var(--text-mid);line-height:1.7;margin-bottom:1rem}
+.ch-meta{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--text-light);margin-bottom:1rem}
+.ch-progress{background:var(--cream-dark);border-radius:var(--r-full);height:6px;margin-bottom:.4rem;overflow:hidden}
+.ch-fill{height:100%;border-radius:var(--r-full);background:linear-gradient(90deg,var(--green-sage),var(--gold))}
+.ch-pts{background:var(--gold-pale);color:#7a5f00;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full)}
+
+/* ── Wall of Fame ── */
+.wof-section{background:var(--green-deep);padding:80px 5%}
+.wof-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:3rem}
+.wof-card{background:rgba(255,255,255,.06);border:1px solid rgba(183,228,199,.15);border-radius:var(--r-md);padding:1.5rem;text-align:center;transition:all .35s}
+.wof-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.wof-medal{font-size:2rem;margin-bottom:.5rem;display:block}
+.wof-city{font-size:.7rem;font-weight:700;color:var(--gold-light);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
+.wof-community{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:.75rem}
+.wof-stats{font-size:.75rem;color:rgba(255,255,255,.6)}
+.wof-month{font-size:.65rem;color:rgba(255,255,255,.4);margin-top:.25rem}
+
+@media(max-width:900px){.podium{flex-direction:column;align-items:center}.podium-item{max-width:100%;width:100%}.lb-header,.lb-row{grid-template-columns:50px 1fr 80px 80px}.lb-header>:last-child,.lb-row>:last-child{display:none}}
+@media(max-width:600px){.lb-header,.lb-row{grid-template-columns:40px 1fr 70px}.lb-header>:nth-child(3),.lb-row>:nth-child(3){display:none}.lb-tab{padding:8px 14px;font-size:.76rem}}
+</style>
+</head>
+<body>
+<div id="scroll-bar"></div>
+<div class="cursor-glow"></div>
+<nav class="navbar">
+  <div class="nav-brand"><div class="brand-icon">🌿</div> ECO-HUB</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li><li><a href="perizinan.html">E-Perizinan</a></li>
+    <li><a href="heatmap.html">Heatmap</a></li><li><a href="guidebook.html">Guidebook</a></li>
+    <li><a href="leaderboard.html" class="active">Leaderboard</a></li><li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="perizinan.html" class="nav-cta">Bergabung 2026</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Beranda</a><a href="perizinan.html">E-Perizinan</a>
+  <a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a>
+  <a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a>
+</div>
+
+<div class="page-wrapper">
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Beranda</a> › Leaderboard</div>
+  <h1>🏆 Leaderboard ECO-HUB 2026</h1>
+  <p>Relawan terbaik. Komunitas paling berdampak. Guardian City sejati. Nominasi Super Relawan bulan ini terbuka — berikan suaramu!</p>
+</div>
+
+<section class="section">
+  <!-- TABS -->
+  <div style="text-align:center">
+    <div class="lb-tabs">
+      <button class="lb-tab active" onclick="showTab(this,'relawan')">👤 Relawan</button>
+      <button class="lb-tab" onclick="showTab(this,'komunitas')">👥 Komunitas</button>
+      <button class="lb-tab" onclick="showTab(this,'kota')">🏙️ Kota</button>
+    </div>
+  </div>
+
+  <!-- PODIUM -->
+  <div class="podium" id="podium-relawan">
+    <div class="podium-item second reveal d2">
+      <span class="podium-rank">🥈</span>
+      <div class="podium-card second">
+        <span class="podium-badge">Guardian City</span>
+        <div class="podium-avatar">🌱</div>
+        <div class="podium-name">Siti Rahayu</div>
+        <div class="podium-city">Bogor Tengah</div>
+        <div class="podium-pts" data-target="4250">0</div>
+        <div class="podium-lbl">Eco-Points</div>
+      </div>
+    </div>
+    <div class="podium-item first reveal d1">
+      <span class="podium-rank">🥇</span>
+      <div class="podium-card first">
+        <span class="podium-badge">⭐ Super Relawan</span>
+        <div class="podium-avatar">🌟</div>
+        <div class="podium-name">Ahmad Fauzi</div>
+        <div class="podium-city">Bogor Tengah · GEMAS IPB</div>
+        <div class="podium-pts" data-target="6820">0</div>
+        <div class="podium-lbl">Eco-Points</div>
+      </div>
+    </div>
+    <div class="podium-item third reveal d3">
+      <span class="podium-rank">🥉</span>
+      <div class="podium-card third">
+        <span class="podium-badge">Relawan Aktif</span>
+        <div class="podium-avatar">🌿</div>
+        <div class="podium-name">Budi Santoso</div>
+        <div class="podium-city">Bogor Utara</div>
+        <div class="podium-pts" data-target="3890">0</div>
+        <div class="podium-lbl">Eco-Points</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="lb-table reveal">
+    <div class="lb-header">
+      <div>Rank</div><div>Relawan</div><div>Badge</div><div>Poin</div><div>Perubahan</div>
+    </div>
+    <div class="lb-row highlight">
+      <div class="rank-num gold">1</div>
+      <div class="lb-user"><div class="lb-avatar">🌟</div><div><div class="lb-name">Ahmad Fauzi</div><div class="lb-sub">GEMAS IPB · Bogor Tengah</div></div></div>
+      <div class="lb-badges"><span class="chip" style="font-size:.6rem">⭐ Super</span></div>
+      <div class="lb-pts">6.820</div>
+      <div class="lb-change up">↑ +420</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num silver">2</div>
+      <div class="lb-user"><div class="lb-avatar">🌱</div><div><div class="lb-name">Siti Rahayu</div><div class="lb-sub">KKN UIKA · Bogor Tengah</div></div></div>
+      <div class="lb-badges"><span class="chip" style="font-size:.6rem">🛡️ Guardian</span></div>
+      <div class="lb-pts">4.250</div>
+      <div class="lb-change up">↑ +180</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num bronze">3</div>
+      <div class="lb-user"><div class="lb-avatar">🌿</div><div><div class="lb-name">Budi Santoso</div><div class="lb-sub">Relawan Muda · Bogor Utara</div></div></div>
+      <div class="lb-badges"><span class="chip" style="font-size:.6rem">🌿 Aktif</span></div>
+      <div class="lb-pts">3.890</div>
+      <div class="lb-change down">↓ -50</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">4</div>
+      <div class="lb-user"><div class="lb-avatar">🏫</div><div><div class="lb-name">Dewi Permata</div><div class="lb-sub">Mahasiswi · Bogor Selatan</div></div></div>
+      <div class="lb-badges"><span class="chip" style="font-size:.6rem">🌿 Aktif</span></div>
+      <div class="lb-pts">3.240</div>
+      <div class="lb-change up">↑ +290</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">5</div>
+      <div class="lb-user"><div class="lb-avatar">🦁</div><div><div class="lb-name">Rizky Pratama</div><div class="lb-sub">OSIS SMAN 7 · Bogor</div></div></div>
+      <div class="lb-badges"><span class="badge-gold chip" style="font-size:.6rem">🏫 Pelajar</span></div>
+      <div class="lb-pts">2.980</div>
+      <div class="lb-change up">↑ +350</div>
+    </div>
+    <div class="lb-row">
+      <div class="rank-num">6</div>
+      <div class="lb-user"><div class="lb-avatar">💪</div><div><div class="lb-name">Maya Kusuma</div><div class="lb-sub">Warga · Jl. Sempur RT 04</div></div></div>
+      <div class="lb-badges"><span class="chip" style="font-size:.6rem">🌿 Aktif</span></div>
+      <div class="lb-pts">2.450</div>
+      <div class="lb-change same">→ 0</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARDIAN CITY -->
+<section class="guardian-section">
+  <div class="section-label" style="color:var(--green-light)">Program Eksklusif</div>
+  <h2 class="section-title reveal" style="color:var(--white)">🛡️ Guardian City 2026</h2>
+  <p class="section-subtitle reveal d1" style="color:rgba(255,255,255,.6)">Relawan terpilih yang menjadi Penjaga Zona resmi kelurahan mereka. Dipilih berdasarkan poin, rekam jejak, dan voting komunitas.</p>
+  <div class="gc-grid">
+    <div class="gc-card reveal d1">
+      <div class="gc-zone">🛡️ Zona: Kelurahan Sempur</div>
+      <div class="gc-name">Ahmad Fauzi</div>
+      <div class="gc-city">📍 Bogor Tengah · Aktif sejak Jan 2026</div>
+      <div class="gc-stats">
+        <div class="gc-stat"><span class="gc-stat-num">23</span><span class="gc-stat-lbl">Aksi</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">312kg</span><span class="gc-stat-lbl">Sampah</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">6.820</span><span class="gc-stat-lbl">Poin</span></div>
+      </div>
+      <div class="gc-badge-wrap">
+        <span class="gc-badge">⭐ Super Relawan</span>
+        <span class="gc-badge">🦟 Anti-DBD</span>
+        <span class="gc-badge">📋 E-Perizinan</span>
+      </div>
+    </div>
+    <div class="gc-card reveal d2">
+      <div class="gc-zone">🛡️ Zona: Kelurahan Cibogor</div>
+      <div class="gc-name">Siti Rahayu</div>
+      <div class="gc-city">📍 Bogor Tengah · Aktif sejak Feb 2026</div>
+      <div class="gc-stats">
+        <div class="gc-stat"><span class="gc-stat-num">18</span><span class="gc-stat-lbl">Aksi</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">198kg</span><span class="gc-stat-lbl">Sampah</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">4.250</span><span class="gc-stat-lbl">Poin</span></div>
+      </div>
+      <div class="gc-badge-wrap">
+        <span class="gc-badge">🛡️ Guardian</span>
+        <span class="gc-badge">🏥 Mitra Sehat</span>
+      </div>
+    </div>
+    <div class="gc-card reveal d3">
+      <div class="gc-zone">🛡️ Zona: Kelurahan Paledang</div>
+      <div class="gc-name">[Posisi Terbuka]</div>
+      <div class="gc-city">📍 Bogor Tengah · Butuh Guardian!</div>
+      <div class="gc-stats">
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Aksi</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Sampah</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Poin</span></div>
+      </div>
+      <div style="margin-top:1rem"><a href="perizinan.html" class="btn btn-outline" style="width:100%;justify-content:center;color:var(--green-light);border-color:var(--green-light);padding:8px">🛡️ Daftar Guardian</a></div>
+    </div>
+    <div class="gc-card reveal d4">
+      <div class="gc-zone">🛡️ Zona: Kelurahan Babakan</div>
+      <div class="gc-name">[Posisi Terbuka]</div>
+      <div class="gc-city">📍 Bogor Tengah · Butuh Guardian!</div>
+      <div class="gc-stats">
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Aksi</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Sampah</span></div>
+        <div class="gc-stat"><span class="gc-stat-num">—</span><span class="gc-stat-lbl">Poin</span></div>
+      </div>
+      <div style="margin-top:1rem"><a href="perizinan.html" class="btn btn-outline" style="width:100%;justify-content:center;color:var(--green-light);border-color:var(--green-light);padding:8px">🛡️ Daftar Guardian</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPER RELAWAN NOMINATION -->
+<section class="nomination-section">
+  <div class="section-label">Voting Terbuka</div>
+  <h2 class="section-title reveal">⭐ Nominasi Super Relawan — Juni 2026</h2>
+  <p class="section-subtitle reveal d1">Pilih relawan yang paling menginspirasi bulan ini. Voting ditutup 30 Juni 2026 pukul 23.59 WIB.</p>
+  <div class="nominee-grid">
+    <div class="nominee-card reveal d1">
+      <div class="nominee-photo">
+        <img src="images/activity-1.jpg" alt="Ahmad" style="transform:rotate(90deg) scale(1.6)"/>
+        <span class="nominee-crown">👑</span>
+      </div>
+      <div class="nominee-body">
+        <div class="nominee-name">Ahmad Fauzi</div>
+        <div class="nominee-title">Guardian City · Kelurahan Sempur</div>
+        <div class="nominee-stats">
+          <div class="ns-item"><span class="ns-num">23</span><span class="ns-lbl">Aksi</span></div>
+          <div class="ns-item"><span class="ns-num">312kg</span><span class="ns-lbl">Sampah</span></div>
+        </div>
+        <div class="vote-bar"><div class="vote-fill" style="width:68%"></div></div>
+        <div class="vote-pct">68% suara (1.247 votes)</div>
+        <button class="vote-btn" onclick="vote(this,'Ahmad')">❤️ Beri Suara</button>
+      </div>
+    </div>
+    <div class="nominee-card reveal d2">
+      <div class="nominee-photo">
+        <img src="images/team-photo.jpg" alt="Siti" style="object-position:center 20%"/>
+      </div>
+      <div class="nominee-body">
+        <div class="nominee-name">Siti Rahayu</div>
+        <div class="nominee-title">Koordinator · KKN UIKA Bogor</div>
+        <div class="nominee-stats">
+          <div class="ns-item"><span class="ns-num">18</span><span class="ns-lbl">Aksi</span></div>
+          <div class="ns-item"><span class="ns-num">198kg</span><span class="ns-lbl">Sampah</span></div>
+        </div>
+        <div class="vote-bar"><div class="vote-fill" style="width:22%"></div></div>
+        <div class="vote-pct">22% suara (403 votes)</div>
+        <button class="vote-btn" onclick="vote(this,'Siti')">❤️ Beri Suara</button>
+      </div>
+    </div>
+    <div class="nominee-card reveal d3">
+      <div class="nominee-photo">
+        <img src="images/showcase-main.png" alt="Budi" style="object-position:center"/>
+      </div>
+      <div class="nominee-body">
+        <div class="nominee-name">Budi Santoso</div>
+        <div class="nominee-title">Relawan Muda · Bogor Utara</div>
+        <div class="nominee-stats">
+          <div class="ns-item"><span class="ns-num">15</span><span class="ns-lbl">Aksi</span></div>
+          <div class="ns-item"><span class="ns-num">156kg</span><span class="ns-lbl">Sampah</span></div>
+        </div>
+        <div class="vote-bar"><div class="vote-fill" style="width:10%"></div></div>
+        <div class="vote-pct">10% suara (183 votes)</div>
+        <button class="vote-btn" onclick="vote(this,'Budi')">❤️ Beri Suara</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECO CHALLENGE -->
+<section class="challenge-section">
+  <div class="section-label">Kompetisi Aktif</div>
+  <h2 class="section-title reveal">🎯 Eco-Challenge Minggu Ini</h2>
+  <p class="section-subtitle reveal d1">Tantangan mingguan antar komunitas. Siapa yang paling banyak mengangkut sampah dan membersihkan drainase?</p>
+  <div class="challenge-grid">
+    <div class="ch-card reveal d1">
+      <span class="ch-tag active">🔴 Aktif Sekarang</span>
+      <span class="ch-icon">🚰</span>
+      <h3>Drainase Sprint Week</h3>
+      <p>Komunitas mana yang bisa membersihkan paling banyak meter drainase dalam 7 hari? Hadiah alat kebersihan dari sponsor!</p>
+      <div class="ch-meta"><span>👥 47 komunitas bergabung</span><span class="ch-pts">+500 Poin/komunitas</span></div>
+      <div class="ch-progress"><div class="ch-fill" style="width:65%"></div></div>
+      <div style="font-size:.72rem;color:var(--text-light);margin-bottom:.75rem">65% durasi berlalu · Berakhir Minggu, 22 Jun 2026</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="showToast('Komunitas kamu berhasil bergabung ke Eco-Challenge! 🎯')">🎯 Ikuti Challenge</button>
+    </div>
+    <div class="ch-card reveal d2">
+      <span class="ch-tag active">🟠 Aktif Sekarang</span>
+      <span class="ch-icon">🦟</span>
+      <h3>Anti-DBD Blitz</h3>
+      <p>Laporkan sebanyak mungkin titik jentik nyamuk di zona kalian. Data terbanyak mendapatkan apresiasi dari Dinas Kesehatan!</p>
+      <div class="ch-meta"><span>👥 31 komunitas bergabung</span><span class="ch-pts">+300 Poin/laporan</span></div>
+      <div class="ch-progress"><div class="ch-fill" style="width:40%"></div></div>
+      <div style="font-size:.72rem;color:var(--text-light);margin-bottom:.75rem">40% durasi berlalu · Berakhir Kamis, 26 Jun 2026</div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="showToast('Berhasil bergabung! Laporkan titik jentik di heatmap 🦟')">🎯 Ikuti Challenge</button>
+    </div>
+    <div class="ch-card reveal d3">
+      <span class="ch-tag upcoming">🟡 Segera Hadir</span>
+      <span class="ch-icon">📸</span>
+      <h3>Best Before-After Photo</h3>
+      <p>Foto before-after terbaik dipilih oleh komunitas melalui voting. Pemenang mendapat fitur di halaman utama ECO-HUB!</p>
+      <div class="ch-meta"><span>Dimulai 23 Jun 2026</span><span class="ch-pts">+1.000 Poin</span></div>
+      <div class="ch-progress"><div class="ch-fill" style="width:0%"></div></div>
+      <div style="font-size:.72rem;color:var(--text-light);margin-bottom:.75rem">Belum dimulai · Mulai Senin, 23 Jun 2026</div>
+      <button class="btn btn-outline" style="width:100%;justify-content:center" onclick="showToast('Kamu sudah dalam daftar notifikasi! ⏰')">🔔 Ingatkan Saya</button>
+    </div>
+  </div>
+</section>
+
+<!-- WALL OF FAME -->
+<section class="wof-section">
+  <div class="section-label" style="color:var(--gold-light)">Hall of Champions</div>
+  <h2 class="section-title reveal" style="color:var(--white)">🏛️ Wall of Fame</h2>
+  <p class="section-subtitle reveal d1" style="color:rgba(255,255,255,.6);margin:0 auto;text-align:center">Komunitas terbaik setiap bulan. Nama mereka terukir permanen sebagai pionir gerakan kebersihan Indonesia.</p>
+  <div class="wof-grid">
+    <div class="wof-card reveal d1"><span class="wof-medal">🥇</span><div class="wof-city">Bogor · Mei 2026</div><div class="wof-community">GEMAS IPB</div><div class="wof-stats">47 kantong · 120m drainase</div></div>
+    <div class="wof-card reveal d2"><span class="wof-medal">🏆</span><div class="wof-city">Bogor · Apr 2026</div><div class="wof-community">KKN UIKA Bogor</div><div class="wof-stats">38 kantong · 95m drainase</div></div>
+    <div class="wof-card reveal d3"><span class="wof-medal">⭐</span><div class="wof-city">Bogor · Mar 2026</div><div class="wof-community">Relawan Muda Bogor</div><div class="wof-stats">32 kantong · 80m drainase</div></div>
+    <div class="wof-card reveal d4"><span class="wof-medal">🌿</span><div class="wof-city">Bogor · Feb 2026</div><div class="wof-community">BEM UNPAK</div><div class="wof-stats">28 kantong · 70m drainase</div></div>
+    <div class="wof-card reveal d5"><span class="wof-medal">💚</span><div class="wof-city">Bogor · Jan 2026</div><div class="wof-community">Pramuka SMAN 1 Bogor</div><div class="wof-stats">24 kantong · 60m drainase</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><h3>🌿 ECO-HUB 2026</h3><p>Platform digital crowdsourcing untuk reformasi birokrasi kebersihan, pemberantasan DBD, dan pemberdayaan Gen Z menuju Indonesia Emas 2045.</p></div>
+    <div class="footer-col"><h4>Platform</h4><a href="perizinan.html">E-Perizinan</a><a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a><a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a></div>
+    <div class="footer-col"><h4>Program</h4><a href="leaderboard.html">Guardian City</a><a href="leaderboard.html">Super Relawan</a><a href="leaderboard.html">Eco-Challenge</a><a href="#">Wall of Fame</a></div>
+    <div class="footer-col"><h4>Kontak</h4><a href="#">Tim ECO-HUB</a><a href="sponsorship.html">Kemitraan CSR</a><a href="#">Pemerintah Daerah</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 ECO-HUB · LEON FORCEMI · Taman Sempur, Bogor</span><span>Indonesia Emas 2045 🇮🇩</span></div>
+</footer>
+</div>
+
+<script src="main.js"></script>
+<script>
+function showTab(btn, tab) {
+  document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  showToast(`Menampilkan leaderboard: ${tab} 📊`);
+}
+function vote(btn, name) {
+  btn.disabled = true;
+  btn.textContent = '✓ Suara Diberikan!';
+  showToast(`Kamu sudah memilih ${name} sebagai Super Relawan! ⭐`);
+}
+</script>
+</body>
+</html>

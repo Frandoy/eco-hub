@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ECO-HUB 2026 — Gerakan Bersih Digital Indonesia</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;padding:100px 5% 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 80% 50%,rgba(45,106,79,.07) 0%,transparent 60%);z-index:0}
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.particle{position:absolute;width:4px;height:4px;background:var(--green-light);border-radius:50%;opacity:.4;animation:particle-float linear infinite}
+@keyframes particle-float{0%{transform:translateY(100vh) scale(0)}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(45,106,79,.12),rgba(212,160,23,.08));color:var(--green-dark);padding:8px 20px;border-radius:var(--r-full);font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;border:1px solid rgba(45,106,79,.2);animation:fadeUp .8s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse-ring 1.5s ease-out infinite}
+.hero h1{animation:fadeUp .8s .15s var(--ease) both;margin-bottom:.5rem}
+.hero h1 em{font-style:normal;color:var(--green-sage);position:relative;display:inline-block}
+.hero h1 em::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:4px;animation:shimmer 2s linear infinite;background-size:200% auto}
+.typed-wrap{font-size:1rem;font-weight:600;color:var(--green-sage);margin-bottom:.5rem;animation:fadeUp .8s .2s var(--ease) both}
+.typed-text{border-right:2px solid var(--gold);padding-right:3px;animation:blink .8s step-end infinite}
+.hero-desc{font-size:1.02rem;color:var(--text-mid);max-width:490px;line-height:1.9;margin-bottom:2.5rem;animation:fadeUp .8s .25s var(--ease) both}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .8s .35s var(--ease) both}
+.hero-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--cream-dark);animation:fadeUp .8s .45s var(--ease) both;flex-wrap:wrap}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--green-deep);display:block}
+.stat-label{font-size:.72rem;color:var(--text-light);font-weight:500}
+.hero-visual{position:relative;z-index:1;animation:fadeUp 1s .3s both}
+.hero-img-main{width:100%;height:480px;object-fit:cover;border-radius:var(--r-xl);box-shadow:var(--shadow-xl);animation:float 6s ease-in-out infinite}
+.hero-img-overlay{position:absolute;bottom:-28px;left:-28px;width:210px;height:160px;object-fit:cover;border-radius:var(--r-md);border:4px solid var(--white);box-shadow:var(--shadow-lg);animation:floatR 5s ease-in-out infinite}
+.hero-badge{position:absolute;top:24px;right:-16px;background:var(--white);border-radius:var(--r-md);padding:14px 18px;box-shadow:var(--shadow-md);display:flex;align-items:center;gap:10px;animation:bounceIn 1s .8s both}
+.hb-main{font-size:.82rem;font-weight:700;color:var(--green-deep)}
+.hb-sub{font-size:.68rem;color:var(--text-light)}
+.hero-badge-2{position:absolute;bottom:60px;right:-20px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--shadow-md);animation:bounceIn 1s 1s both;color:var(--white)}
+.hb2-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700}
+.hb2-lbl{font-size:.65rem;opacity:.9}
+
+/* ── Ticker ── */
+.ticker-wrap{background:var(--green-deep);padding:12px 0;overflow:hidden;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;width:80px;height:100%;z-index:2}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--green-deep),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(-90deg,var(--green-deep),transparent)}
+.ticker{display:flex;animation:ticker 30s linear infinite;white-space:nowrap}
+.ticker-item{padding:0 2rem;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:.75rem}
+.ticker-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── Eco Points Banner ── */
+.eco-points-banner{background:linear-gradient(135deg,var(--green-deep) 0%,var(--green-dark) 60%,#1a4d2e 100%);padding:2.5rem 5%;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.epb-left h3{color:var(--white);font-size:1.1rem;margin-bottom:.25rem}
+.epb-left p{color:rgba(255,255,255,.65);font-size:.82rem}
+.epb-points{display:flex;gap:2rem;flex-wrap:wrap}
+.ep-item{text-align:center;padding:1rem 1.5rem;background:rgba(255,255,255,.08);border-radius:var(--r-md);border:1px solid rgba(255,255,255,.12)}
+.ep-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);display:block}
+.ep-lbl{font-size:.65rem;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ── Sampah Tracker ── */
+.tracker-section{background:var(--green-deep);padding:60px 5%}
+.tracker-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem}
+.tracker-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:1.75rem;text-align:center;transition:all .35s}
+.tracker-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.tc-icon{font-size:2rem;margin-bottom:.75rem;display:block}
+.tc-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold-light);display:block;margin-bottom:.25rem}
+.tc-lbl{font-size:.75rem;color:rgba(255,255,255,.6);font-weight:500}
+.tc-trend{font-size:.68rem;color:var(--green-light);margin-top:.25rem}
+
+/* ── Features ── */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.feat-card{background:var(--white);border-radius:var(--r-md);padding:2rem;box-shadow:var(--shadow-sm);border:1px solid rgba(183,228,199,.4);transition:all .4s var(--ease);position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green-sage),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.feat-card:hover::before{transform:scaleX(1)}
+.feat-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md)}
+.feat-icon{width:56px;height:56px;background:var(--cream);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.25rem;transition:transform .3s var(--spring)}
+.feat-card:hover .feat-icon{transform:scale(1.15) rotate(-5deg)}
+.feat-card h3{font-size:1rem;color:var(--green-deep);margin-bottom:.5rem}
+.feat-card p{font-size:.83rem;line-height:1.7;margin-bottom:1.25rem}
+.feat-new{position:absolute;top:1rem;right:1rem;background:var(--gold);color:var(--white);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── Feed Before-After ── */
+.feed-section{background:var(--cream-dark)}
+.feed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:3rem}
+.feed-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .4s var(--ease)}
+.feed-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.feed-header{padding:1rem 1.25rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid var(--cream-dark)}
+.feed-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--green-mist);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.feed-author h5{font-size:.84rem;font-weight:700;color:var(--green-deep)}
+.feed-author p{font-size:.7rem;color:var(--text-light)}
+.feed-meta{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.feed-images{display:grid;grid-template-columns:1fr 1fr;gap:2px;position:relative}
+.feed-images img{width:100%;height:160px;object-fit:cover;transition:transform .5s}
+.feed-card:hover .feed-images img{transform:scale(1.03)}
+.feed-label{position:absolute;top:8px;left:8px;background:rgba(192,57,43,.9);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full)}
+.feed-label-after{left:auto;right:8px;background:rgba(45,106,79,.9)}
+.feed-body{padding:1rem 1.25rem}
+.feed-body h4{font-size:.88rem;color:var(--green-deep);margin-bottom:.4rem}
+.feed-body p{font-size:.76rem;color:var(--text-mid);margin-bottom:.75rem}
+.feed-actions{display:flex;gap:.75rem;align-items:center}
+.feed-btn{background:none;border:none;font-family:'Poppins',sans-serif;font-size:.75rem;font-weight:600;color:var(--text-light);cursor:pointer;display:flex;align-items:center;gap:4px;transition:color .25s;padding:0}
+.feed-btn:hover{color:var(--green-sage)}
+.feed-points{margin-left:auto;background:var(--gold-pale);color:#8B6914;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full)}
+
+/* ── How it works ── */
+.how-section{background:var(--green-deep)}
+.how-section .section-label{color:var(--gold-light)}
+.how-section .section-title{color:var(--white)}
+.how-section .section-subtitle{color:rgba(255,255,255,.6)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:3.5rem;position:relative}
+.steps-grid::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:repeating-linear-gradient(90deg,rgba(212,160,23,.4) 0,rgba(212,160,23,.4) 8px,transparent 8px,transparent 16px)}
+.step-item{text-align:center}
+.step-num{width:58px;height:58px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin:0 auto 1.5rem;position:relative;z-index:1;box-shadow:0 6px 24px rgba(212,160,23,.4);transition:transform .3s var(--spring)}
+.step-item:hover .step-num{transform:scale(1.15)}
+.step-item h3{color:var(--white);font-size:1rem;margin-bottom:.5rem}
+.step-item p{color:rgba(255,255,255,.6);font-size:.82rem}
+
+/* ── Impact ── */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3rem}
+.impact-photo{width:100%;height:500px;object-fit:cover;border-radius:var(--r-xl);box-shadow:var(--shadow-xl)}
+.impact-card-overlay{position:absolute;bottom:-28px;right:-28px;background:var(--white);border-radius:var(--r-md);padding:1.5rem 2rem;box-shadow:var(--shadow-lg);min-width:190px}
+.ov-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--green-deep)}
+.impact-list{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+.impact-item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:var(--white);border-radius:var(--r-sm);box-shadow:var(--shadow-sm);transition:all .35s;border-left:3px solid transparent}
+.impact-item:hover{border-left-color:var(--green-sage);transform:translateX(6px);box-shadow:var(--shadow-md)}
+.ii-icon{width:42px;height:42px;flex-shrink:0;background:var(--cream);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.impact-item h4{font-size:.9rem;color:var(--green-deep);margin-bottom:.2rem}
+.impact-item p{font-size:.78rem;color:var(--text-light)}
+
+/* ── Anti-DBD Preview ── */
+.dbd-section{background:linear-gradient(135deg,#1a0a0a,#4a0f0f)}
+.dbd-section .section-label{color:rgba(255,200,200,.8)}
+.dbd-section .section-title{color:var(--white)}
+.dbd-section .section-subtitle{color:rgba(255,255,255,.6)}
+.dbd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem}
+.dbd-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,100,100,.2);border-radius:var(--r-md);padding:1.75rem;text-align:center;transition:all .35s}
+.dbd-card:hover{background:rgba(255,255,255,.1);transform:translateY(-6px);border-color:rgba(255,100,100,.4)}
+.dbd-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.dbd-card h3{color:var(--white);font-size:1rem;margin-bottom:.5rem}
+.dbd-card p{color:rgba(255,255,255,.6);font-size:.8rem;line-height:1.7}
+
+/* ── Guardian City ── */
+.guardian-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.guardian-photo{width:100%;height:420px;object-fit:cover;border-radius:var(--r-xl);box-shadow:var(--shadow-lg)}
+.guardian-features{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.gf-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--white);border-radius:var(--r-sm);box-shadow:var(--shadow-sm);transition:all .3s}
+.gf-item:hover{transform:translateX(6px);box-shadow:var(--shadow-md)}
+.gf-icon{width:40px;height:40px;background:var(--green-mist);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.gf-item h5{font-size:.85rem;color:var(--green-deep);font-weight:600}
+.gf-item p{font-size:.75rem;color:var(--text-light)}
+
+/* ── Gallery ── */
+.gallery-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.gallery-item{position:relative;overflow:hidden;border-radius:var(--r-md);cursor:pointer}
+.gallery-item img{width:100%;height:240px;object-fit:cover;transition:transform .6s var(--ease)}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,40,24,.8) 0%,transparent 50%);display:flex;align-items:flex-end;padding:1.25rem;opacity:0;transition:opacity .4s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{color:var(--white);font-size:.82rem;font-weight:600}
+
+/* ── CTA ── */
+.cta-section{background:linear-gradient(135deg,var(--green-sage) 0%,var(--green-deep) 100%);border-radius:var(--r-xl);padding:5rem;text-align:center;margin:0 5% 96px;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:-40%;right:-10%;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,.04)}
+.cta-section::after{content:'';position:absolute;bottom:-40%;left:-10%;width:400px;height:400px;border-radius:50%;background:rgba(212,160,23,.07)}
+.cta-section h2{color:var(--white);margin-bottom:1rem;position:relative;z-index:1}
+.cta-section p{color:rgba(255,255,255,.75);margin-bottom:2.5rem;position:relative;z-index:1;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center;gap:3rem}
+  .hero-desc{max-width:100%}.hero-actions{justify-content:center}.hero-stats{justify-content:center}
+  .hero-visual{order:-1}.hero-img-main{height:300px;animation:none}.hero-img-overlay{display:none}.hero-badge{top:0;right:0}.hero-badge-2{display:none}
+  .steps-grid::before{display:none}.impact-grid,.guardian-grid{grid-template-columns:1fr}
+  .impact-card-overlay{position:relative;bottom:auto;right:auto;margin-top:1rem}
+  .tracker-grid{grid-template-columns:repeat(2,1fr)}.gallery-strip{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .hero{padding:100px 5% 60px}.hero-stats{gap:1.5rem;flex-wrap:wrap}
+  .cta-section{padding:3rem 1.5rem}.tracker-grid{grid-template-columns:1fr}
+  .gallery-strip{grid-template-columns:1fr}.feed-images img{height:120px}
+}
+</style>
+</head>
+<body>
+<div id="scroll-bar"></div>
+<div class="cursor-glow"></div>
+
+<!-- Particles -->
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const wrap = document.querySelector('.hero-particles');
+  if(!wrap) return;
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div'); p.className='particle';
+    p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;opacity:${.2+Math.random()*.4}`;
+    wrap.appendChild(p);
+  }
+});
+</script>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand"><div class="brand-icon">🌿</div> ECO-HUB</div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Beranda</a></li>
+    <li><a href="perizinan.html">E-Perizinan</a></li>
+    <li><a href="heatmap.html">Heatmap</a></li>
+    <li><a href="guidebook.html">Guidebook</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="perizinan.html" class="nav-cta">Bergabung 2026</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Beranda</a><a href="perizinan.html">E-Perizinan</a>
+  <a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a>
+  <a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a>
+  <a href="perizinan.html" style="background:linear-gradient(135deg,#2D6A4F,#40916C);color:#fff;text-align:center;padding:10px;border-radius:999px;margin-top:.5rem;border:none">Bergabung 2026</a>
+</div>
+
+<div class="page-wrapper">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="eyebrow-dot"></span>🇮🇩 Gerakan Nasional 2026 · Bogor sebagai Pilot</div>
+    <div class="typed-wrap">Membersihkan <span class="typed-text">Taman Sempur</span></div>
+    <h1>Kota Bersih<br>Dimulai dari<br><em>Kita</em></h1>
+    <p class="hero-desc">ECO-HUB adalah platform digital crowdsourcing yang memangkas birokrasi perizinan, melawan wabah DBD, melahirkan Guardian City, dan mengubah Gen Z menjadi pahlawan lingkungan menuju Indonesia Emas 2045.</p>
+    <div class="hero-actions">
+      <a href="perizinan.html" class="btn btn-primary">🌿 Mulai Bergerak</a>
+      <a href="guidebook.html" class="btn btn-outline">📚 Pelajari K3</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num" data-target="47" data-suffix="+">0</span><span class="stat-label">Kantong Sampah</span></div>
+      <div><span class="stat-num" data-target="120" data-suffix="m">0</span><span class="stat-label">Drainase Bersih</span></div>
+      <div><span class="stat-num" data-target="250" data-suffix="+">0</span><span class="stat-label">Relawan Aktif</span></div>
+      <div><span class="stat-num" data-target="35" data-suffix="%">0</span><span class="stat-label">DBD Berkurang</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="photo-wrap" style="border-radius:var(--r-xl)">
+      <img src="images/showcase-main.png" alt="Relawan GEMAS Jl. Sempur" class="hero-img-main real-photo" style="height:480px"/>
+    </div>
+    <img src="images/activity-1.jpg" alt="Tim GEMAS" class="hero-img-overlay" style="transform:rotate(90deg) scale(1.4);transform-origin:center"/>
+    <div class="hero-badge">
+      <span style="font-size:1.6rem">♻️</span>
+      <div><div class="hb-main">Izin dalam hitungan jam</div><div class="hb-sub">Bukan lagi berminggu-minggu</div></div>
+    </div>
+    <div class="hero-badge-2">
+      <div class="hb2-num">⭐ 2.450</div>
+      <div class="hb2-lbl">Eco-Points minggu ini</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 ECO-HUB 2026 — Gerakan Nasional Kebersihan Digital</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🦟 Anti-DBD: 35% penurunan sarang nyamuk di Taman Sempur</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🏆 Super Relawan Bulan Ini: Komunitas GEMAS IPB</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>📍 10 Titik Kritis Baru Dilaporkan di Bogor Tengah</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🎯 Target 2026: 1.000 Guardian City di seluruh Indonesia</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>💚 Indonesia Emas 2045 — Lingkungan Bersih Dimulai Hari Ini</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 ECO-HUB 2026 — Gerakan Nasional Kebersihan Digital</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🦟 Anti-DBD: 35% penurunan sarang nyamuk di Taman Sempur</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🏆 Super Relawan Bulan Ini: Komunitas GEMAS IPB</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>📍 10 Titik Kritis Baru Dilaporkan di Bogor Tengah</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🎯 Target 2026: 1.000 Guardian City di seluruh Indonesia</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>💚 Indonesia Emas 2045 — Lingkungan Bersih Dimulai Hari Ini</span>
+  </div>
+</div>
+
+<!-- ECO-POINTS BANNER -->
+<div class="eco-points-banner">
+  <div class="epb-left">
+    <h3>🌟 Eco-Points Kamu Minggu Ini</h3>
+    <p>Kumpulkan poin dari setiap aksi, laporan, dan event. Tukarkan dengan hadiah dari sponsor!</p>
+  </div>
+  <div class="epb-points">
+    <div class="ep-item"><span class="ep-num" data-target="2450">0</span><span class="ep-lbl">Total Eco-Points</span></div>
+    <div class="ep-item"><span class="ep-num" data-target="8">0</span><span class="ep-lbl">Kegiatan Selesai</span></div>
+    <div class="ep-item"><span class="ep-num" data-target="15">0</span><span class="ep-lbl">Laporan Titik</span></div>
+    <div class="ep-item"><span class="ep-num" data-target="3">0</span><span class="ep-lbl">Badge Diraih</span></div>
+  </div>
+  <a href="leaderboard.html" class="btn btn-gold">🏆 Lihat Leaderboard</a>
+</div>
+
+<!-- SAMPAH TRACKER -->
+<section class="tracker-section">
+  <div class="section-label" style="color:var(--gold-light);justify-content:center">Live Counter 2026</div>
+  <h2 class="section-title reveal" style="color:var(--white);text-align:center">Dampak Kumulatif Nasional</h2>
+  <p class="section-subtitle reveal d1" style="color:rgba(255,255,255,.6);text-align:center;margin:0 auto">Setiap aksi relawan ECO-HUB terhitung secara real-time dan berkontribusi pada angka nasional ini.</p>
+  <div class="tracker-grid">
+    <div class="tracker-card reveal d1"><span class="tc-icon">🗑️</span><span class="tc-num" data-target="4728" data-suffix="kg">0</span><span class="tc-lbl">Sampah Terangkut</span><span class="tc-trend">↑ +312kg minggu ini</span></div>
+    <div class="tracker-card reveal d2"><span class="tc-icon">📏</span><span class="tc-num" data-target="8960" data-suffix="m">0</span><span class="tc-lbl">Drainase Dibersihkan</span><span class="tc-trend">↑ +480m bulan ini</span></div>
+    <div class="tracker-card reveal d3"><span class="tc-icon">👥</span><span class="tc-num" data-target="1247">0</span><span class="tc-lbl">Relawan Aktif</span><span class="tc-trend">↑ 47 relawan baru</span></div>
+    <div class="tracker-card reveal d4"><span class="tc-icon">🏙️</span><span class="tc-num" data-target="23">0</span><span class="tc-lbl">Kota Tergabung</span><span class="tc-trend">Target: 100 kota 2026</span></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">Platform Lengkap</div>
+  <h2 class="section-title reveal">Enam Pilar Perubahan ECO-HUB</h2>
+  <p class="section-subtitle reveal d1">Setiap fitur dirancang untuk menghancurkan satu hambatan nyata dalam gerakan kebersihan perkotaan Indonesia.</p>
+  <div class="features-grid">
+    <div class="feat-card reveal d1">
+      <div class="feat-icon">📋</div>
+      <h3>Portal E-Perizinan</h3>
+      <p>Izin kegiatan clean-up selesai dalam hitungan jam. Satu klik persetujuan, QR Code legal langsung di tangan relawan.</p>
+      <a href="perizinan.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Ajukan Izin →</a>
+    </div>
+    <div class="feat-card reveal d2">
+      <div class="feat-icon">🗺️</div>
+      <h3>Heatmap Real-Time</h3>
+      <p>Peta nyata Bogor dengan titik sampah interaktif. Laporkan, pantau, dan ambil aksi langsung dari peta.</p>
+      <a href="heatmap.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Lihat Peta →</a>
+    </div>
+    <div class="feat-card reveal d3">
+      <span class="feat-new">Baru</span>
+      <div class="feat-icon">🦟</div>
+      <h3>Anti-DBD System</h3>
+      <p>Zona risiko nyamuk Aedes aegypti dipetakan. Laporan jentik dari warga diintegrasikan dengan data Puskesmas.</p>
+      <a href="guidebook.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Pelajari →</a>
+    </div>
+    <div class="feat-card reveal d4">
+      <span class="feat-new">Baru</span>
+      <div class="feat-icon">🛡️</div>
+      <h3>Guardian City</h3>
+      <p>Relawan terpilih menjadi Penjaga Zona resmi per kelurahan. Tanggung jawab, wewenang, dan apresiasi nyata.</p>
+      <a href="leaderboard.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Daftar →</a>
+    </div>
+    <div class="feat-card reveal d5">
+      <div class="feat-icon">🏆</div>
+      <h3>Super Relawan</h3>
+      <p>Nominasi bulanan. Voting komunitas. Badge eksklusif dan hadiah dari sponsor untuk yang paling berdampak.</p>
+      <a href="leaderboard.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Nominasi →</a>
+    </div>
+    <div class="feat-card reveal d6">
+      <div class="feat-icon">📊</div>
+      <h3>Kalkulator Dampak</h3>
+      <p>Setiap aksi terhitung. Portofolio digital siap diunggah ke LinkedIn sebagai bukti kontribusi profesional.</p>
+      <a href="dashboard.html" class="btn btn-outline" style="padding:8px 18px;font-size:.8rem">Dashboard →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEED BEFORE-AFTER -->
+<section class="section feed-section">
+  <div class="section-label">Komunitas Bergerak</div>
+  <h2 class="section-title reveal">Feed Aksi Nyata</h2>
+  <p class="section-subtitle reveal d1">Foto before-after dari komunitas yang sudah bergerak. Setiap post menghasilkan Eco-Points dan menginspirasi yang lain.</p>
+  <div class="feed-grid">
+    <div class="feed-card reveal d1">
+      <div class="feed-header">
+        <div class="feed-avatar">🎓</div>
+        <div class="feed-author"><h5>GEMAS IPB</h5><p>Taman Sempur · 2 jam lalu</p></div>
+        <div class="feed-meta"><span class="chip" style="font-size:.62rem">Super Relawan ⭐</span></div>
+      </div>
+      <div class="feed-images">
+        <div style="position:relative"><img src="images/map-photo.png" alt="Sebelum"/><span class="feed-label">SEBELUM</span></div>
+        <div style="position:relative"><img src="images/impact-photo.jpeg" alt="Sesudah" style="object-position:right"/><span class="feed-label feed-label-after">SESUDAH</span></div>
+      </div>
+      <div class="feed-body">
+        <h4>Drainase Jl. Sempur — Bersih!</h4>
+        <p>47 kantong sampah berhasil diangkut. Aliran air kembali lancar. Ini bukan kerja keras biasa — ini masa depan Bogor.</p>
+        <div class="feed-actions">
+          <button class="feed-btn" onclick="this.textContent='❤️ '+( parseInt(this.textContent.replace(/\D/g,''))+1)">❤️ 128</button>
+          <button class="feed-btn">💬 34</button>
+          <button class="feed-btn">↗️ Bagikan</button>
+          <span class="feed-points">+250 Poin</span>
+        </div>
+      </div>
+    </div>
+    <div class="feed-card reveal d2">
+      <div class="feed-header">
+        <div class="feed-avatar">🌱</div>
+        <div class="feed-author"><h5>Relawan Muda Bogor</h5><p>Jl. Paledang · 5 jam lalu</p></div>
+        <div class="feed-meta"><span class="chip" style="font-size:.62rem;background:var(--blue-light);color:var(--blue)">Guardian City 🛡️</span></div>
+      </div>
+      <div class="feed-images">
+        <div style="position:relative"><img src="images/showcase-2.png" alt="Sebelum" style="object-position:center"/><span class="feed-label">SEBELUM</span></div>
+        <div style="position:relative"><img src="images/activity-2.JPG" alt="Sesudah" style="object-position:center"/><span class="feed-label feed-label-after">SESUDAH</span></div>
+      </div>
+      <div class="feed-body">
+        <h4>Pembersihan Selokan RT 04</h4>
+        <p>3 titik selokan tersumbat berhasil dibersihkan. Warga sekitar ikut bergabung spontan — inilah kekuatan komunitas!</p>
+        <div class="feed-actions">
+          <button class="feed-btn" onclick="this.textContent='❤️ '+( parseInt(this.textContent.replace(/\D/g,''))+1)">❤️ 89</button>
+          <button class="feed-btn">💬 21</button>
+          <button class="feed-btn">↗️ Bagikan</button>
+          <span class="feed-points">+180 Poin</span>
+        </div>
+      </div>
+    </div>
+    <div class="feed-card reveal d3">
+      <div class="feed-header">
+        <div class="feed-avatar">🏫</div>
+        <div class="feed-author"><h5>KKN UIKA Bogor</h5><p>Taman Sempur Utara · 1 hari lalu</p></div>
+        <div class="feed-meta"><span class="badge-gold chip">Verified ✓</span></div>
+      </div>
+      <div class="feed-images">
+        <div style="position:relative"><img src="images/map-photo.png" alt="Sebelum" style="object-position:bottom"/><span class="feed-label">SEBELUM</span></div>
+        <div style="position:relative"><img src="images/showcase-main.png" alt="Sesudah" style="object-position:center"/><span class="feed-label feed-label-after">SESUDAH</span></div>
+      </div>
+      <div class="feed-body">
+        <h4>Zona Anti-DBD — Taman Utara</h4>
+        <p>Satu zona berhasil dibersihkan dari genangan. Data jentik dilaporkan ke Puskesmas setempat untuk tindak lanjut.</p>
+        <div class="feed-actions">
+          <button class="feed-btn" onclick="this.textContent='❤️ '+( parseInt(this.textContent.replace(/\D/g,''))+1)">❤️ 204</button>
+          <button class="feed-btn">💬 57</button>
+          <button class="feed-btn">↗️ Bagikan</button>
+          <span class="feed-points">+320 Poin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="section-label">Cara Kerja</div>
+  <h2 class="section-title reveal">Dari Laporan ke Aksi Nyata</h2>
+  <p class="section-subtitle reveal d1">Lima langkah yang mengubah kepedulianmu menjadi dampak terukur dan pengakuan nyata.</p>
+  <div class="steps-grid">
+    <div class="step-item reveal d1"><div class="step-num">1</div><h3>Laporkan</h3><p>Foto titik sampah, GPS otomatis menandai di peta publik.</p></div>
+    <div class="step-item reveal d2"><div class="step-num">2</div><h3>Ajukan Izin</h3><p>Form digital 5 menit, izin resmi + QR Code dalam hitungan jam.</p></div>
+    <div class="step-item reveal d3"><div class="step-num">3</div><h3>Bergerak</h3><p>Datang ke titik merah dengan panduan K3 digital dan sponsor alat.</p></div>
+    <div class="step-item reveal d4"><div class="step-num">4</div><h3>Dokumentasi</h3><p>Foto before-after, upload ke feed, dapatkan Eco-Points otomatis.</p></div>
+    <div class="step-item reveal d5"><div class="step-num">5</div><h3>Naik Level</h3><p>Kumpul poin, nominasi Super Relawan, jadi Guardian City.</p></div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="section">
+  <div class="impact-grid">
+    <div class="reveal-left" style="position:relative">
+      <div class="photo-wrap">
+        <img src="images/impact-photo.jpeg" alt="Dampak Nyata GEMAS" class="impact-photo"/>
+      </div>
+      <div class="impact-card-overlay">
+        <div style="font-size:.73rem;color:var(--text-light);margin-bottom:.2rem">Relawan Aktif 2026</div>
+        <div class="ov-num" data-target="1247" data-suffix="+">0</div>
+        <div style="font-size:.75rem;color:var(--text-light)">di 23 kota Indonesia</div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="section-label">Dampak Terukur</div>
+      <h2 class="section-title">Taman Sempur — Bukti Pertama</h2>
+      <p>Dalam satu sesi GEMAS 2025, puluhan kantong sampah diangkat dari drainase Jalan Sempur. Di 2026, ini bukan lagi momen spontan — ini sistem yang berkelanjutan dan terukur.</p>
+      <div class="impact-list">
+        <div class="impact-item reveal d2"><div class="ii-icon">🚫</div><div><h4>Birokrasi Dipangkas Total</h4><p>Dari berminggu-minggu menjadi 2-6 jam dengan e-perizinan satu klik</p></div></div>
+        <div class="impact-item reveal d3"><div class="ii-icon">🦟</div><div><h4>DBD Turun 35%</h4><p>Drainase bersih = habitat nyamuk Aedes aegypti hancur</p></div></div>
+        <div class="impact-item reveal d4"><div class="ii-icon">🛡️</div><div><h4>Guardian City Lahir</h4><p>Relawan terpilih jadi penjaga zona resmi per kelurahan</p></div></div>
+        <div class="impact-item reveal d5"><div class="ii-icon">🌱</div><div><h4>Gen Z Berdaya</h4><p>Portofolio digital terverifikasi, bernilai di dunia profesional</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTI-DBD -->
+<section class="section dbd-section">
+  <div class="section-label">Program Khusus</div>
+  <h2 class="section-title reveal">🦟 Anti-DBD — ECO-HUB vs Aedes aegypti</h2>
+  <p class="section-subtitle reveal d1" style="margin:0 auto;text-align:center">Setiap drainase yang dibersihkan adalah satu habitat nyamuk yang dihancurkan. ECO-HUB menjadikan ini misi bersama.</p>
+  <div class="dbd-grid">
+    <div class="dbd-card reveal d1"><span class="dbd-icon">🗺️</span><h3>Zona Risiko DBD</h3><p>Peta khusus zona merah risiko tinggi nyamuk, terintegrasi dengan data Puskesmas dan laporan warga.</p></div>
+    <div class="dbd-card reveal d2"><span class="dbd-icon">📊</span><h3>Laporan Jentik</h3><p>Warga bisa melaporkan keberadaan jentik nyamuk di genangan. Data langsung masuk ke sistem monitoring Dinkes.</p></div>
+    <div class="dbd-card reveal d3"><span class="dbd-icon">🏥</span><h3>Mitra Puskesmas</h3><p>Integrasi data kesehatan lingkungan dengan fasilitas kesehatan terdekat untuk respons cepat.</p></div>
+    <div class="dbd-card reveal d4"><span class="dbd-icon">⚠️</span><h3>Alert Sistem</h3><p>Notifikasi otomatis ke relawan Guardian City ketika zona mereka masuk kategori risiko DBD tinggi.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem">
+    <a href="guidebook.html" class="btn btn-red">🦟 Pelajari Panduan Anti-DBD</a>
+  </div>
+</section>
+
+<!-- GUARDIAN CITY -->
+<section class="section">
+  <div class="guardian-grid">
+    <div class="reveal-left">
+      <div class="section-label">Program Unggulan 2026</div>
+      <h2 class="section-title">🛡️ Guardian City — Penjaga Zona Resmi</h2>
+      <p>Bukan sekadar relawan biasa. Guardian City adalah relawan terpilih yang mendapatkan tanggung jawab resmi sebagai penjaga kebersihan zona kelurahan mereka — dengan dukungan platform, pemerintah, dan sponsor.</p>
+      <div class="guardian-features">
+        <div class="gf-item reveal d2"><div class="gf-icon">🏅</div><div><h5>Seleksi Ketat & Transparan</h5><p>Dipilih berdasarkan Eco-Points, rekam jejak, dan voting komunitas</p></div></div>
+        <div class="gf-item reveal d3"><div class="gf-icon">📱</div><div><h5>Akses Dashboard Eksklusif</h5><p>Pantau zona, terima laporan warga, koordinasi dengan Dinas</p></div></div>
+        <div class="gf-item reveal d4"><div class="gf-icon">🤝</div><div><h5>Dukungan Sponsor Langsung</h5><p>Alat kebersihan, seragam, dan insentif dari mitra CSR ECO-HUB</p></div></div>
+        <div class="gf-item reveal d5"><div class="gf-icon">🏆</div><div><h5>Sertifikat Resmi Pemerintah</h5><p>Pengakuan legal dari Dinas Lingkungan Hidup Kota Bogor</p></div></div>
+      </div>
+      <br><a href="leaderboard.html" class="btn btn-primary">🛡️ Daftar Guardian City</a>
+    </div>
+    <div class="reveal-right">
+      <div class="photo-wrap" style="border-radius:var(--r-xl)">
+        <img src="images/team-photo.jpg" alt="Tim Guardian City GEMAS" class="guardian-photo"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" style="padding-top:0">
+  <div class="section-label">Dokumentasi</div>
+  <h2 class="section-title reveal">Aksi Nyata di Lapangan</h2>
+  <div class="gallery-strip">
+    <div class="gallery-item reveal d1"><img src="images/showcase-main.png" alt="Relawan bersih jalan"/><div class="gallery-overlay"><span>📍 Jl. Sempur · Aksi Clean-Up</span></div></div>
+    <div class="gallery-item reveal d2"><img src="images/showcase-2.png" alt="Drainase" style="object-position:center"/><div class="gallery-overlay"><span>🚰 Pembersihan Drainase</span></div></div>
+    <div class="gallery-item reveal d3"><img src="images/map-photo.png" alt="Sampah" style="object-position:center"/><div class="gallery-overlay"><span>⚠️ Kondisi Sebelum Aksi</span></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section reveal">
+  <h2>Bergabung. Bergerak. Berdampak.</h2>
+  <p>Indonesia Emas 2045 dimulai dari satu drainase yang bersih, satu relawan yang berani, satu kota yang peduli. Mulai dari Bogor, menuju Indonesia.</p>
+  <div class="cta-actions">
+    <a href="perizinan.html" class="btn btn-white">🌿 Daftar Relawan 2026</a>
+    <a href="leaderboard.html" class="btn btn-gold">🛡️ Jadi Guardian City</a>
+    <a href="sponsorship.html" class="btn btn-outline" style="border-color:rgba(255,255,255,.5);color:#fff">🤝 Sponsorship CSR</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>🌿 ECO-HUB 2026</h3>
+      <p>Platform digital crowdsourcing untuk reformasi birokrasi kebersihan, pemberantasan DBD, dan pemberdayaan Gen Z menuju Indonesia Emas 2045. Dimulai dari Taman Sempur, Bogor.</p>
+      <br>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <span class="chip">🇮🇩 Indonesia</span>
+        <span class="footer-badge">LEON FORCEMI 2026</span>
+        <span class="footer-badge">SDGs #3 #11</span>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Platform</h4><a href="perizinan.html">E-Perizinan</a><a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a><a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a><a href="sponsorship.html">Sponsorship</a></div>
+    <div class="footer-col"><h4>Program</h4><a href="leaderboard.html">Guardian City</a><a href="leaderboard.html">Super Relawan</a><a href="leaderboard.html">Eco-Challenge</a><a href="#">Anti-DBD System</a><a href="#">Wall of Fame</a><a href="#">Mitra Sehat</a></div>
+    <div class="footer-col"><h4>Tentang</h4><a href="#">Studi Kasus GEMAS</a><a href="#">SDGs & Indonesia 2045</a><a href="#">Arsitektur Sistem</a><a href="#">Tim ECO-HUB</a><a href="sponsorship.html">Kemitraan CSR</a><a href="#">Pemerintah Daerah</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ECO-HUB · Karya LEON FORCEMI · Studi Kasus Taman Sempur, Bogor</span>
+    <span>Menuju Indonesia Emas 2045 🇮🇩</span>
+  </div>
+</footer>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

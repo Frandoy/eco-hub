@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Guidebook K3 — ECO-HUB 2026</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.page-hero{background:linear-gradient(135deg,#0a1f0a 0%,var(--green-dark) 100%);padding:100px 5% 80px;position:relative;overflow:hidden}
+.page-hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--cream);clip-path:ellipse(55% 100% at 50% 100%)}
+.page-hero h1{color:var(--white);margin-bottom:.75rem}
+.page-hero p{color:rgba(255,255,255,.75);max-width:560px}
+.breadcrumb{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:1rem}
+.breadcrumb a{color:var(--gold-light)}
+
+/* ── Cards Carousel ── */
+.carousel-section{padding:60px 5%}
+.carousel-tabs{display:flex;gap:.75rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.ctab{padding:10px 22px;border-radius:var(--r-full);font-size:.82rem;font-weight:600;cursor:pointer;border:2px solid var(--cream-dark);color:var(--text-mid);background:var(--white);transition:all .3s}
+.ctab.active{background:var(--green-sage);border-color:var(--green-sage);color:var(--white)}
+.ctab:hover{border-color:var(--green-sage);color:var(--green-sage)}
+.ctab.active:hover{color:var(--white)}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.guide-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .4s var(--ease);border:1px solid var(--cream-dark)}
+.guide-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.gc-header{padding:1.5rem;display:flex;align-items:center;gap:1rem}
+.gc-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.gc-header h3{font-size:1rem;color:var(--green-deep)}
+.gc-header p{font-size:.75rem;color:var(--text-light)}
+.gc-body{padding:0 1.5rem 1.5rem}
+.gc-steps{display:flex;flex-direction:column;gap:.6rem}
+.gc-step{display:flex;align-items:flex-start;gap:.6rem;font-size:.8rem;color:var(--text-mid);line-height:1.5}
+.gc-step-num{width:20px;height:20px;border-radius:50%;background:var(--green-mist);color:var(--green-dark);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.gc-danger{background:var(--red-light);border-radius:var(--r-sm);padding:.75rem 1rem;margin-top:.75rem;font-size:.77rem;color:var(--red);font-weight:500}
+.gc-tip{background:var(--gold-pale);border-radius:var(--r-sm);padding:.75rem 1rem;margin-top:.75rem;font-size:.77rem;color:#7a5f00;font-weight:500}
+
+/* ── DBD Section ── */
+.dbd-full{background:linear-gradient(135deg,#1a0808,#3d1010);padding:80px 5%}
+.dbd-full .section-title{color:var(--white)}
+.dbd-cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;margin-top:3rem;position:relative}
+.dbd-cycle::before{content:'';position:absolute;top:40px;left:5%;right:5%;height:2px;background:repeating-linear-gradient(90deg,rgba(220,53,69,.4) 0,rgba(220,53,69,.4) 8px,transparent 8px,transparent 16px)}
+.dc-item{text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(220,53,69,.2);border-radius:var(--r-md);padding:1.5rem;transition:all .35s}
+.dc-item:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
+.dc-num{width:56px;height:56px;background:rgba(192,57,43,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 1rem;position:relative;z-index:1}
+.dc-item h4{color:var(--white);font-size:.9rem;margin-bottom:.4rem}
+.dc-item p{color:rgba(255,255,255,.6);font-size:.75rem}
+
+.prevention-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:3rem}
+.prev-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:1.5rem;transition:all .35s}
+.prev-card:hover{background:rgba(255,255,255,.1)}
+.prev-icon{font-size:1.8rem;margin-bottom:.75rem;display:block}
+.prev-card h4{color:var(--white);font-size:.9rem;margin-bottom:.5rem}
+.prev-card p{color:rgba(255,255,255,.6);font-size:.78rem;line-height:1.6}
+
+/* ── Tools ── */
+.tools-section{padding:80px 5%;background:var(--cream-dark)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-top:3rem}
+.tool-card{background:var(--white);border-radius:var(--r-md);padding:1.5rem;text-align:center;box-shadow:var(--shadow-sm);transition:all .35s;border:1px solid var(--cream-dark)}
+.tool-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.tool-icon{font-size:2.2rem;margin-bottom:.75rem;display:block}
+.tool-card h4{font-size:.88rem;color:var(--green-deep);margin-bottom:.25rem}
+.tool-card p{font-size:.72rem;color:var(--text-light)}
+.tool-required{background:var(--green-mist);color:var(--green-dark);font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);display:inline-block;margin-top:.5rem}
+
+/* ── Disease Info ── */
+.disease-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+.dis-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--cream-dark);transition:all .35s}
+.dis-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.dis-header{padding:1.25rem 1.5rem;display:flex;align-items:center;gap:.75rem}
+.dis-icon{font-size:1.8rem}
+.dis-header h3{font-size:.95rem;color:var(--green-deep)}
+.dis-body{padding:0 1.5rem 1.5rem}
+.dis-risk{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--r-full);font-size:.65rem;font-weight:700;margin-bottom:.75rem}
+.dis-body p{font-size:.78rem;color:var(--text-mid);line-height:1.7}
+.dis-prevention{margin-top:.75rem;font-size:.75rem;color:var(--green-sage);font-weight:600}
+</style>
+</head>
+<body>
+<div id="scroll-bar"></div>
+<div class="cursor-glow"></div>
+<nav class="navbar">
+  <div class="nav-brand"><div class="brand-icon">🌿</div> ECO-HUB</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li><li><a href="perizinan.html">E-Perizinan</a></li>
+    <li><a href="heatmap.html">Heatmap</a></li><li><a href="guidebook.html" class="active">Guidebook</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li><li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="perizinan.html" class="nav-cta">Bergabung 2026</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Beranda</a><a href="perizinan.html">E-Perizinan</a>
+  <a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a>
+  <a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a>
+</div>
+
+<div class="page-wrapper">
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Beranda</a> › Guidebook</div>
+  <h1>📚 Guidebook K3 & Anti-DBD</h1>
+  <p>Panduan lengkap Kesehatan & Keselamatan Kerja untuk relawan ECO-HUB. Wajib dibaca sebelum turun lapangan. Keselamatanmu adalah prioritas utama kami.</p>
+</div>
+
+<!-- CAROUSEL TABS -->
+<div class="carousel-section">
+  <div class="carousel-tabs">
+    <button class="ctab active" onclick="showCategory(this,'k3')">🦺 Prosedur K3</button>
+    <button class="ctab" onclick="showCategory(this,'drainase')">🚰 Pembersihan Drainase</button>
+    <button class="ctab" onclick="showCategory(this,'sampah')">🗑️ Pengelolaan Sampah</button>
+    <button class="ctab" onclick="showCategory(this,'darurat')">🚑 Prosedur Darurat</button>
+  </div>
+
+  <!-- K3 Cards -->
+  <div id="cat-k3" class="cards-grid">
+    <div class="guide-card reveal d1">
+      <div class="gc-header"><div class="gc-icon" style="background:#e8f5e9">🧤</div><div><h3>Alat Pelindung Diri (APD)</h3><p>Wajib sebelum memulai kegiatan</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Pakai sarung tangan tebal (karet/kulit) sebelum menyentuh sampah apapun</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Masker N95 wajib untuk area drainase berbau atau berdebu</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Gunakan sepatu tertutup/boots — DILARANG sandal jepit</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Baju lengan panjang untuk melindungi dari gigitan serangga</span></div>
+        </div>
+        <div class="gc-danger">⚠️ JANGAN pernah menyentuh sampah medis/jarum dengan tangan telanjang!</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d2">
+      <div class="gc-header"><div class="gc-icon" style="background:#fff3e0">☀️</div><div><h3>Kondisi Fisik & Cuaca</h3><p>Kenali batas kemampuan tubuhmu</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Minum air minimal 200ml setiap 30 menit kerja di luar ruangan</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Istirahat wajib 15 menit setiap 1 jam bekerja di lapangan</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Hentikan kegiatan jika ada petir — jangan berteduh di bawah pohon</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Pastikan sarapan/makan sebelum kegiatan — jangan bekerja dalam kondisi lapar</span></div>
+        </div>
+        <div class="gc-tip">💡 Waktu terbaik kegiatan: 06.00–09.00 WIB atau 15.00–17.00 WIB</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d3">
+      <div class="gc-header"><div class="gc-icon" style="background:#fce4ec">👥</div><div><h3>Koordinasi Tim</h3><p>Sistem kerja yang aman dan efektif</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Selalu bekerja minimal berdua — DILARANG bekerja sendirian di area terpencil</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Tunjuk 1 orang sebagai koordinator K3 per kelompok</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Bagikan nomor darurat (ketua tim, puskesmas terdekat) ke semua anggota</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Lakukan briefing singkat 10 menit sebelum mulai kegiatan</span></div>
+        </div>
+        <div class="gc-tip">💡 Nomor Darurat: 119 (Ambulans) | 110 (Polisi) | 021-500-454 (BNPB)</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d4">
+      <div class="gc-header"><div class="gc-icon" style="background:#e3f2fd">🔦</div><div><h3>Keselamatan di Drainase</h3><p>Protokol khusus masuk selokan</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Cek kedalaman dan stabilitas selokan sebelum masuk — gunakan tongkat</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Seorang anggota tim selalu berdiri di luar untuk pengawasan</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Gunakan senter/headlamp untuk area gelap dan sempit</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Keluar segera jika mencium bau gas atau merasa pusing</span></div>
+        </div>
+        <div class="gc-danger">⚠️ Gas metan di selokan bisa menyebabkan kehilangan kesadaran mendadak!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drainase Cards -->
+  <div id="cat-drainase" class="cards-grid" style="display:none">
+    <div class="guide-card reveal d1">
+      <div class="gc-header"><div class="gc-icon" style="background:#e8f5e9">🔍</div><div><h3>Survey Sebelum Aksi</h3><p>Penilaian awal lokasi drainase</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Foto kondisi awal (before) untuk feed dan laporan platform</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Estimasi volume sampah dan tentukan jumlah alat yang dibutuhkan</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Cek apakah ada aliran air aktif — tunggu surut sebelum masuk</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Identifikasi jenis sampah: plastik, organik, atau B3 (Bahan Berbahaya)</span></div>
+        </div>
+        <div class="gc-tip">💡 Upload foto ke ECO-HUB heatmap sebelum mulai untuk +50 Eco-Points!</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d2">
+      <div class="gc-header"><div class="gc-icon" style="background:#fff8e1">🛠️</div><div><h3>Teknik Pembersihan</h3><p>Cara yang benar dan efisien</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Mulai dari hulu (bagian atas) ke hilir agar sampah tidak kembali masuk</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Gunakan cangkul atau sekop untuk sampah padat berlumpur</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Pisahkan sampah plastik, organik, dan residu ke kantong berbeda</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Jangan bakar sampah di lokasi — serahkan ke TPS terdekat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="guide-card reveal d3">
+      <div class="gc-header"><div class="gc-icon" style="background:#fce4ec">📊</div><div><h3>Dokumentasi & Pelaporan</h3><p>Rekam dampak aksimu</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Foto after dari sudut yang sama dengan foto before</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Hitung dan catat jumlah kantong sampah yang terkumpul</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Ukur panjang drainase yang berhasil dibersihkan (dalam meter)</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Upload ke platform untuk Eco-Points dan portofolio digital</span></div>
+        </div>
+        <div class="gc-tip">💡 1 kantong sampah = +10 Eco-Points | 10 meter drainase = +25 Eco-Points</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sampah Cards -->
+  <div id="cat-sampah" class="cards-grid" style="display:none">
+    <div class="guide-card reveal d1">
+      <div class="gc-header"><div class="gc-icon" style="background:#e8f5e9">♻️</div><div><h3>Pemilahan Sampah</h3><p>Sistem warna kantong standar</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num" style="background:#c8e6c9">♻</div><span>Kantong HIJAU — Sampah organik (daun, sisa makanan)</span></div>
+          <div class="gc-step"><div class="gc-step-num" style="background:#bbdefb">♻</div><span>Kantong BIRU — Sampah daur ulang (plastik, kertas, logam)</span></div>
+          <div class="gc-step"><div class="gc-step-num" style="background:#ffcdd2">♻</div><span>Kantong MERAH — Sampah B3 (baterai, obat, elektronik)</span></div>
+          <div class="gc-step"><div class="gc-step-num" style="background:#e0e0e0">♻</div><span>Kantong ABU — Residu/sisa yang tidak bisa didaur ulang</span></div>
+        </div>
+        <div class="gc-danger">⚠️ JANGAN campur sampah B3 dengan sampah biasa — berbahaya!</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d2">
+      <div class="gc-header"><div class="gc-icon" style="background:#fff3e0">🚛</div><div><h3>Pengelolaan Akhir</h3><p>Ke mana sampah hasil aksi</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Koordinasi dengan Dinas Kebersihan Kota untuk penjemputan</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Sampah organik bisa diserahkan ke bank sampah untuk kompos</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Sampah daur ulang serahkan ke pengepul atau bank sampah</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Sampah B3 WAJIB diserahkan ke DLHK (Dinas Lingkungan Hidup)</span></div>
+        </div>
+        <div class="gc-tip">💡 ECO-HUB membantu koordinasi pengangkutan sampah dengan Dinas Kota!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Darurat Cards -->
+  <div id="cat-darurat" class="cards-grid" style="display:none">
+    <div class="guide-card reveal d1">
+      <div class="gc-header"><div class="gc-icon" style="background:#fce4ec">🚑</div><div><h3>Pertolongan Pertama</h3><p>P3K lapangan yang wajib dibawa</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">1</div><span>Plester dan perban untuk luka gores ringan dari sampah</span></div>
+          <div class="gc-step"><div class="gc-step-num">2</div><span>Antiseptik (betadine/alkohol 70%) untuk desinfeksi luka</span></div>
+          <div class="gc-step"><div class="gc-step-num">3</div><span>Oralit untuk dehidrasi dan kelelahan di lapangan</span></div>
+          <div class="gc-step"><div class="gc-step-num">4</div><span>Hubungi 119 segera jika ada yang pingsan, luka dalam, atau syok</span></div>
+        </div>
+        <div class="gc-danger">⚠️ Luka tusukan jarum/benda tajam berkarat = langsung ke IGD, jangan ditunda!</div>
+      </div>
+    </div>
+    <div class="guide-card reveal d2">
+      <div class="gc-header"><div class="gc-icon" style="background:#e3f2fd">📞</div><div><h3>Nomor Darurat Bogor</h3><p>Simpan sebelum turun lapangan</p></div></div>
+      <div class="gc-body">
+        <div class="gc-steps">
+          <div class="gc-step"><div class="gc-step-num">☎</div><span><strong>119</strong> — Ambulans Nasional (24 jam)</span></div>
+          <div class="gc-step"><div class="gc-step-num">☎</div><span><strong>110</strong> — Polisi (situasi darurat keamanan)</span></div>
+          <div class="gc-step"><div class="gc-step-num">☎</div><span><strong>113</strong> — Pemadam Kebakaran Kota Bogor</span></div>
+          <div class="gc-step"><div class="gc-step-num">☎</div><span><strong>DLHK Bogor</strong> — (0251) 8321-820 (sampah B3)</span></div>
+        </div>
+        <div class="gc-tip">💡 Screenshot halaman ini dan simpan sebelum kegiatan dimulai!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DBD SECTION -->
+<section class="dbd-full">
+  <div class="section-label" style="color:rgba(255,200,200,.8)">Ancaman Nyata</div>
+  <h2 class="section-title reveal">🦟 Memahami Siklus DBD</h2>
+  <p class="section-subtitle reveal d1" style="color:rgba(255,255,255,.6)">Untuk memberantas DBD, kita harus mengerti cara kerja musuh kita. Setiap drainase yang kita bersihkan menghancurkan satu siklus hidup nyamuk.</p>
+  <div class="dbd-cycle">
+    <div class="dc-item reveal d1"><div class="dc-num">🥚</div><h4>Telur</h4><p>Diletakkan di genangan air bersih atau permukaan lembab. Bertahan hingga 12 bulan!</p></div>
+    <div class="dc-item reveal d2"><div class="dc-num">🐛</div><h4>Jentik</h4><p>Berkembang di air tergenang selama 7–14 hari. Drainase kotor = surga jentik.</p></div>
+    <div class="dc-item reveal d3"><div class="dc-num">🫘</div><h4>Pupa</h4><p>Fase diam 1–4 hari. Tidak makan tapi tetap berkembang di air.</p></div>
+    <div class="dc-item reveal d4"><div class="dc-num">🦟</div><h4>Nyamuk Dewasa</h4><p>Aktif menggigit pukul 06.00–10.00 dan 16.00–18.00 WIB.</p></div>
+    <div class="dc-item reveal d5"><div class="dc-num">🤒</div><h4>Korban DBD</h4><p>Inkubasi 4–10 hari. Demam tinggi, nyeri sendi, ruam merah khas.</p></div>
+  </div>
+  <h3 style="color:var(--white);text-align:center;margin-top:3rem;margin-bottom:2rem">Cara ECO-HUB Memutus Rantai DBD</h3>
+  <div class="prevention-grid">
+    <div class="prev-card reveal d1"><span class="prev-icon">🗺️</span><h4>Peta Zona Risiko</h4><p>Area genangan air dipetakan dan diprioritaskan untuk aksi pembersihan segera.</p></div>
+    <div class="prev-card reveal d2"><span class="prev-icon">📊</span><h4>Laporan Jentik</h4><p>Warga melaporkan temuan jentik langsung ke platform — data masuk ke sistem Dinkes.</p></div>
+    <div class="prev-card reveal d3"><span class="prev-icon">🤝</span><h4>Mitra Puskesmas</h4><p>Data ECO-HUB diintegrasikan dengan rekam medis Puskesmas untuk pola deteksi dini.</p></div>
+    <div class="prev-card reveal d4"><span class="prev-icon">⚡</span><h4>Respons Cepat</h4><p>Guardian City mendapat notifikasi instan ketika zona mereka masuk zona risiko tinggi.</p></div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section">
+  <div class="section-label">Persiapan Lapangan</div>
+  <h2 class="section-title reveal">🛠️ Daftar Alat Wajib Relawan</h2>
+  <p class="section-subtitle reveal d1">Semua alat ini disediakan oleh sponsor ECO-HUB untuk komunitas terdaftar. Pastikan semuanya ada sebelum turun lapangan.</p>
+  <div class="tools-grid">
+    <div class="tool-card reveal d1"><span class="tool-icon">🧤</span><h4>Sarung Tangan</h4><p>Karet tebal anti-tusuk</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d2"><span class="tool-icon">😷</span><h4>Masker N95</h4><p>Anti-debu dan bau</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d3"><span class="tool-icon">👟</span><h4>Sepatu Boots</h4><p>Anti-slip, anti-tusuk</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d4"><span class="tool-icon">🗑️</span><h4>Kantong Sampah</h4><p>Besar, kuat, warna-warni</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d5"><span class="tool-icon">🦺</span><h4>Rompi K3</h4><p>Reflektif, mudah terlihat</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d1"><span class="tool-icon">🔦</span><h4>Senter/Headlamp</h4><p>Untuk area gelap</p><span class="tool-required" style="background:var(--gold-pale);color:#7a5f00">DISARANKAN</span></div>
+    <div class="tool-card reveal d2"><span class="tool-icon">🧹</span><h4>Sapu Lidi & Sekop</h4><p>Alat pengumpul utama</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d3"><span class="tool-icon">💧</span><h4>Air Minum</h4><p>Min. 1.5L per orang</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d4"><span class="tool-icon">🩹</span><h4>Kotak P3K</h4><p>Plester, antiseptik, perban</p><span class="tool-required">WAJIB</span></div>
+    <div class="tool-card reveal d5"><span class="tool-icon">📱</span><h4>Smartphone</h4><p>Untuk foto & laporan</p><span class="tool-required" style="background:var(--gold-pale);color:#7a5f00">DISARANKAN</span></div>
+  </div>
+</section>
+
+<!-- DISEASES -->
+<section class="section">
+  <div class="section-label">Waspadai</div>
+  <h2 class="section-title reveal">⚠️ Penyakit Lingkungan yang Perlu Diwaspadai</h2>
+  <div class="disease-grid">
+    <div class="dis-card reveal d1">
+      <div class="dis-header"><span class="dis-icon">🦟</span><div><h3>Demam Berdarah Dengue (DBD)</h3></div></div>
+      <div class="dis-body"><span class="dis-risk badge-red chip">Risiko TINGGI 🔴</span><p>Penyakit yang ditularkan nyamuk Aedes aegypti melalui gigitan. Berkembang biak di genangan air bersih di drainase tersumbat.</p><div class="dis-prevention">✅ Pencegahan: Bersihkan drainase, gunakan lotion anti-nyamuk, baju lengan panjang</div></div>
+    </div>
+    <div class="dis-card reveal d2">
+      <div class="dis-header"><span class="dis-icon">🦠</span><div><h3>Leptospirosis</h3></div></div>
+      <div class="dis-body"><span class="dis-risk badge-red chip">Risiko TINGGI 🔴</span><p>Infeksi bakteri dari urin tikus yang terbawa air selokan. Masuk melalui luka terbuka atau selaput lendir. Sangat berbahaya di musim hujan.</p><div class="dis-prevention">✅ Pencegahan: Tidak masuk selokan jika ada luka terbuka, gunakan boots, cuci tangan</div></div>
+    </div>
+    <div class="dis-card reveal d3">
+      <div class="dis-header"><span class="dis-icon">🤢</span><div><h3>Diare & Kolera</h3></div></div>
+      <div class="dis-body"><span class="dis-risk chip" style="background:#fff3e0;color:#e65100">Risiko SEDANG 🟠</span><p>Infeksi bakteri dari air atau tangan yang terkontaminasi sampah. Sering muncul setelah kegiatan pembersihan di area kotor.</p><div class="dis-prevention">✅ Pencegahan: Cuci tangan pakai sabun, jangan sentuh wajah saat bekerja</div></div>
+    </div>
+    <div class="dis-card reveal d4">
+      <div class="dis-header"><span class="dis-icon">🫁</span><div><h3>ISPA (Infeksi Saluran Pernapasan)</h3></div></div>
+      <div class="dis-body"><span class="dis-risk chip" style="background:#fff3e0;color:#e65100">Risiko SEDANG 🟠</span><p>Infeksi dari debu, gas metan, dan partikel sampah di area drainase sempit. Meningkat saat bekerja di selokan tertutup.</p><div class="dis-prevention">✅ Pencegahan: Masker N95 wajib, jangan masuk selokan tertutup tanpa ventilasi</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="background:linear-gradient(135deg,var(--green-sage),var(--green-deep));border-radius:var(--r-xl);padding:4rem;text-align:center;margin:0 5% 80px">
+  <h2 style="color:var(--white);margin-bottom:1rem">Siap Turun Lapangan dengan Aman?</h2>
+  <p style="color:rgba(255,255,255,.75);margin-bottom:2rem;max-width:480px;margin-left:auto;margin-right:auto">Sudah baca guidebook ini? Ajukan izin kegiatan sekarang dan dapatkan QR Code legal dalam hitungan jam.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="perizinan.html" class="btn btn-white">📋 Ajukan Izin Kegiatan</a>
+    <a href="heatmap.html" class="btn btn-gold">🗺️ Lihat Titik Kritis</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><h3>🌿 ECO-HUB 2026</h3><p>Platform digital crowdsourcing untuk reformasi birokrasi kebersihan, pemberantasan DBD, dan pemberdayaan Gen Z menuju Indonesia Emas 2045.</p></div>
+    <div class="footer-col"><h4>Platform</h4><a href="perizinan.html">E-Perizinan</a><a href="heatmap.html">Heatmap</a><a href="guidebook.html">Guidebook</a><a href="leaderboard.html">Leaderboard</a><a href="dashboard.html">Dashboard</a></div>
+    <div class="footer-col"><h4>Program</h4><a href="leaderboard.html">Guardian City</a><a href="leaderboard.html">Super Relawan</a><a href="#">Anti-DBD</a><a href="sponsorship.html">Sponsorship CSR</a></div>
+    <div class="footer-col"><h4>Kontak</h4><a href="#">Tim ECO-HUB</a><a href="#">Pemerintah Daerah</a><a href="#">Mitra Puskesmas</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 ECO-HUB · LEON FORCEMI · Taman Sempur, Bogor</span><span>Indonesia Emas 2045 🇮🇩</span></div>
+</footer>
+</div>
+
+<script src="main.js"></script>
+<script>
+function showCategory(btn, cat) {
+  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['k3','drainase','sampah','darurat'].forEach(c => {
+    const el = document.getElementById('cat-'+c);
+    if (el) el.style.display = c === cat ? 'grid' : 'none';
+  });
+}
+</script>
+</body>
+</html>
